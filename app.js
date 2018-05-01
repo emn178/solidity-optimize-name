@@ -52,7 +52,7 @@
   }
 
   function parseSignature(signature) {
-    if (signature.charAt(signature.length - 1) != ')') {
+    if (signature.charAt(signature.length - 1) != ')' || signature.indexOf(' ') !== -1) {
       return false;
     }
     var parts = signature.split('(');
@@ -125,15 +125,19 @@
       restore(hash);
       ++index;
     }
-    sig = obj.name + '_' + toChars(bytes) + char + obj.args;
+    if (index) {
+      sig = obj.name + '_' + toChars(bytes) + char + obj.args;
+    }
     return [sig, keccak256(sig).substr(0, 8)];
   }
 
   $(document).ready(function () {
     $('#optimize').click(function () {
       var input = $('#input').val();
+      $('#error').hide();;
       var data = parseSignature(input);
       if (!data) {
+        $('#error').show();;
         return;
       }
       console.time('a');
