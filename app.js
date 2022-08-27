@@ -55,14 +55,10 @@
     if (signature.charAt(signature.length - 1) != ')' || signature.indexOf(' ') !== -1) {
       return false;
     }
-    var parts = signature.split('(');
-    if (parts.length == 2) {
-      return {
-        name: parts[0],
-        args: '(' + parts[1]
-      };
-    } else {
-      return false;
+    var partsIndex = signature.indexOf('(');
+    return {
+      name: signature.substr(0, partsIndex),
+      args: signature.substr(partsIndex)
     }
   }
 
